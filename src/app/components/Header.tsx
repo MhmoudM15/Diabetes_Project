@@ -25,7 +25,7 @@ export function Header() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-500 rounded-xl flex items-center justify-center shadow-md">
               <Heart className="w-6 h-6 text-white fill-white" />
             </div>
-            <span className="font-semibold text-xl text-gray-900">DiabetesAI</span>
+            <span className="font-semibold text-xl text-gray-900">Smart Medical AI System</span>
           </motion.div>
 
           {/* Action Buttons */}

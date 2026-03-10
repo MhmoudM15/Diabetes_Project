@@ -64,7 +64,7 @@ export function PatientDashboard() {
       >
         {/* Logo */}
         <div className="p-6 border-b-2 border-gray-200">
-          <h2 className="text-2xl text-blue-600 tracking-tight">DiabetesAI</h2>
+          <h2 className="text-2xl text-blue-600 tracking-tight">Smart Medical AI System</h2>
           <p className="text-sm text-gray-600 mt-1">Patient Portal</p>
         </div>
 
