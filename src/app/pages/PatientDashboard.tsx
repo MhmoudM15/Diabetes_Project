@@ -16,13 +16,17 @@ import { AIPredictionPanel } from "../components/dashboard/AIPredictionPanel";
 import { RiskIndicator } from "../components/dashboard/RiskIndicator";
 import { MealRecommendations } from "../components/dashboard/MealRecommendations";
 import { AlertCenterPage } from "../components/dashboard/AlertCenter";
-import { DailySummary } from "../components/dashboard/DailySummary";
-import { QuickActions } from "../components/dashboard/QuickActions";
 import { GlucoseLogging } from "../components/dashboard/GlucoseLogging";
 import { PredictionPage } from "../components/dashboard/PredictionPage";
 import { DietRecommendations } from "../components/dashboard/DietRecommendations";
 import { AIAssistant } from "../components/dashboard/AIAssistant";
 import { ProfilePage } from "../components/dashboard/ProfilePage";
+import { RealTimeGlucose } from "../components/dashboard/RealTimeGlucose";
+import { TrendGraph } from "../components/dashboard/TrendGraph";
+import { CurrentGlucoseCard } from "../components/dashboard/CurrentGlucoseCard";
+import { AIPredictionsCard } from "../components/dashboard/AIPredictionsCard";
+import { StatusSummaryCard } from "../components/dashboard/StatusSummaryCard";
+import { GlucoseTrendChart } from "../components/dashboard/GlucoseTrendChart";
 
 export function PatientDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -137,42 +141,44 @@ export function PatientDashboard() {
               </motion.div>
 
               {/* Dashboard Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Top Row - Glucose Chart (spans 2 columns) */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="lg:col-span-2"
-                >
-                  <GlucoseChart />
-                </motion.div>
+              <div className="space-y-6">
+                {/* Top Row - Three Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Current Glucose */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    <CurrentGlucoseCard />
+                  </motion.div>
 
-                {/* Right Column - AI Predictions */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <AIPredictionPanel />
-                </motion.div>
+                  {/* AI Predictions */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <AIPredictionsCard />
+                  </motion.div>
 
-                {/* Second Row - Daily Summary and Quick Actions */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="lg:col-span-2"
-                >
-                  <DailySummary />
-                </motion.div>
+                  {/* Status Summary */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <StatusSummaryCard />
+                  </motion.div>
+                </div>
 
+                {/* Full-Width Trend Chart */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  <QuickActions onActionClick={setActiveTab} />
+                  <GlucoseTrendChart />
                 </motion.div>
               </div>
             </>

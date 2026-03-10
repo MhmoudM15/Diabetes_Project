@@ -14,6 +14,7 @@ import {
   Plus
 } from "lucide-react";
 import { Button } from "../ui/button";
+import { MealCard } from "./DietRecommendationsMealCard";
 
 interface Meal {
   id: string;
@@ -146,49 +147,77 @@ export function DietRecommendations() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Current Status & AI Advisor */}
-        <div className="space-y-6">
-          {/* Current Glucose Status */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`bg-white border-2 ${currentRiskConfig.borderColor} rounded-3xl p-6 shadow-sm`}
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`w-12 h-12 ${currentRiskConfig.bgColor} rounded-xl flex items-center justify-center`}>
-                <Activity className={`w-6 h-6 ${currentRiskConfig.color}`} />
-              </div>
-              <div>
-                <h3 className="text-gray-900 font-medium" style={{ fontSize: "1.125rem" }}>
-                  Current Status
-                </h3>
-                <p className="text-gray-600 text-sm">Updated 5 min ago</p>
+      <div className="space-y-6">
+        {/* Current Status - Full Width at Top */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className={`bg-white border-2 ${currentRiskConfig.borderColor} rounded-3xl p-6 shadow-sm`}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`w-12 h-12 ${currentRiskConfig.bgColor} rounded-xl flex items-center justify-center`}>
+              <Activity className={`w-6 h-6 ${currentRiskConfig.color}`} />
+            </div>
+            <div>
+              <h3 className="text-gray-900 font-medium" style={{ fontSize: "1.125rem" }}>
+                Current Status
+              </h3>
+              <p className="text-gray-600 text-sm">Updated 5 min ago</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <p className="text-gray-600 text-sm mb-1">Glucose Level</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl text-gray-900 font-medium">{currentGlucose}</span>
+                <span className="text-gray-600">mg/dL</span>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <p className="text-gray-600 text-sm mb-1">Glucose Level</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl text-gray-900 font-medium">{currentGlucose}</span>
-                  <span className="text-gray-600">mg/dL</span>
-                </div>
-              </div>
-
-              <div className={`${currentRiskConfig.bgColor} rounded-2xl p-4`}>
-                <p className="text-sm text-gray-600 mb-1">Risk Level</p>
-                <p className={`text-2xl font-medium ${currentRiskConfig.color}`}>{riskLevel}</p>
-              </div>
+            <div className={`${currentRiskConfig.bgColor} rounded-2xl p-4`}>
+              <p className="text-sm text-gray-600 mb-1">Risk Level</p>
+              <p className={`text-2xl font-medium ${currentRiskConfig.color}`}>{riskLevel}</p>
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* AI Diet Advisor Message */}
+        {/* Recommended Meals - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="mb-6">
+            <h2 className="text-gray-900 mb-2" style={{ fontSize: "1.5rem" }}>
+              Recommended Meals
+            </h2>
+            <p className="text-gray-600">
+              Meals optimized for your current glucose level and health goals
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {recommendedMeals.map((meal, index) => (
+              <MealCard
+                key={meal.id}
+                meal={meal}
+                index={index}
+                onViewDetails={setSelectedMeal}
+                onLogMeal={handleLogMeal}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bottom Row - AI Diet Advisor and Foods to Avoid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* AI Diet Advisor */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="bg-white border-2 border-blue-200 rounded-3xl p-6 shadow-sm"
           >
             <div className="flex items-start gap-3">
@@ -227,7 +256,7 @@ export function DietRecommendations() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="bg-white border-2 border-red-200 rounded-3xl p-6 shadow-sm"
           >
             <div className="flex items-center gap-3 mb-4">
@@ -270,116 +299,6 @@ export function DietRecommendations() {
                       }`}>
                         {food.reason}
                       </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Right Column - Recommended Meals */}
-        <div className="lg:col-span-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="mb-6">
-              <h2 className="text-gray-900 mb-2" style={{ fontSize: "1.5rem" }}>
-                Recommended Meals
-              </h2>
-              <p className="text-gray-600">
-                Meals optimized for your current glucose level and health goals
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {recommendedMeals.map((meal, index) => (
-                <motion.div
-                  key={meal.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 * index }}
-                  className="bg-white border-2 border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                >
-                  {/* Meal Image Placeholder */}
-                  <div className="h-48 bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center">
-                    <UtensilsCrossed className="w-16 h-16 text-gray-300" />
-                  </div>
-
-                  <div className="p-6">
-                    {/* Meal Header */}
-                    <div className="mb-4">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="text-gray-900 font-medium pr-2" style={{ fontSize: "1.125rem" }}>
-                          {meal.name}
-                        </h3>
-                        <div className="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-lg flex-shrink-0">
-                          <ThumbsUp className="w-3 h-3 text-green-700" />
-                          <span className="text-sm font-medium text-green-700">{meal.suitability}%</span>
-                        </div>
-                      </div>
-                      <p className="text-sm text-gray-600">{meal.description}</p>
-                    </div>
-
-                    {/* Nutrition Info */}
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-gray-50 rounded-xl p-3">
-                        <div className="flex items-center gap-2 mb-1">
-                          <Flame className="w-4 h-4 text-orange-600" />
-                          <span className="text-xs text-gray-600">Calories</span>
-                        </div>
-                        <p className="text-lg font-medium text-gray-900">{meal.calories}</p>
-                      </div>
-                      <div className="bg-blue-50 rounded-xl p-3">
-                        <div className="flex items-center gap-2 mb-1">
-                          <Wheat className="w-4 h-4 text-blue-600" />
-                          <span className="text-xs text-gray-600">Carbs</span>
-                        </div>
-                        <p className="text-lg font-medium text-gray-900">{meal.carbs}g</p>
-                      </div>
-                    </div>
-
-                    {/* Macros Bar */}
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
-                        <span>Protein: {meal.protein}g</span>
-                        <span>Fat: {meal.fat}g</span>
-                        <span>Fiber: {meal.fiber}g</span>
-                      </div>
-                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden flex">
-                        <div 
-                          className="bg-blue-500" 
-                          style={{ width: `${(meal.protein / (meal.protein + meal.fat + meal.carbs)) * 100}%` }}
-                        />
-                        <div 
-                          className="bg-yellow-500" 
-                          style={{ width: `${(meal.fat / (meal.protein + meal.fat + meal.carbs)) * 100}%` }}
-                        />
-                        <div 
-                          className="bg-green-500" 
-                          style={{ width: `${(meal.carbs / (meal.protein + meal.fat + meal.carbs)) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <Button
-                        onClick={() => setSelectedMeal(meal)}
-                        className="bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 rounded-xl py-2 transition-all"
-                      >
-                        <span className="text-sm">View Details</span>
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                      <Button
-                        onClick={() => handleLogMeal(meal)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-2 transition-all"
-                      >
-                        <Plus className="w-4 h-4 mr-1" />
-                        <span className="text-sm">Log Meal</span>
-                      </Button>
                     </div>
                   </div>
                 </motion.div>
