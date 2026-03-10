@@ -15,7 +15,6 @@ import {
   Heart,
   TrendingUp,
   Lock,
-  Bell,
   UserCheck,
   CheckCircle2
 } from "lucide-react";
@@ -39,14 +38,6 @@ interface HealthData {
   bmi: number;
   averageGlucose: number;
   lastUpdated: string;
-}
-
-interface NotificationPreferences {
-  emailAlerts: boolean;
-  smsAlerts: boolean;
-  criticalAlerts: boolean;
-  dailyReport: boolean;
-  weeklyReport: boolean;
 }
 
 export function ProfilePage() {
@@ -75,15 +66,6 @@ export function ProfilePage() {
     lastUpdated: "Mar 10, 2026"
   });
 
-  // Account Settings State
-  const [notifications, setNotifications] = useState<NotificationPreferences>({
-    emailAlerts: true,
-    smsAlerts: true,
-    criticalAlerts: true,
-    dailyReport: false,
-    weeklyReport: true
-  });
-
   const [assignedDoctor, setAssignedDoctor] = useState({
     name: "Dr. Sarah Johnson",
     specialty: "Endocrinologist",
@@ -94,20 +76,17 @@ export function ProfilePage() {
   // Temporary states for editing
   const [tempPersonalInfo, setTempPersonalInfo] = useState<PersonalInfo>(personalInfo);
   const [tempHealthData, setTempHealthData] = useState<HealthData>(healthData);
-  const [tempNotifications, setTempNotifications] = useState<NotificationPreferences>(notifications);
 
   const handleEdit = (section: string) => {
     setEditingSection(section);
     // Reset temp states to current values
     if (section === "personal") setTempPersonalInfo(personalInfo);
     if (section === "health") setTempHealthData(healthData);
-    if (section === "notifications") setTempNotifications(notifications);
   };
 
   const handleSave = (section: string) => {
     if (section === "personal") setPersonalInfo(tempPersonalInfo);
     if (section === "health") setHealthData(tempHealthData);
-    if (section === "notifications") setNotifications(tempNotifications);
     
     setEditingSection(null);
     setShowSuccess(true);
@@ -413,13 +392,7 @@ export function ProfilePage() {
                 </div>
               </div>
               {editingSection !== "health" && (
-                <Button
-                  onClick={() => handleEdit("health")}
-                  className="bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 rounded-xl px-4 py-2"
-                >
-                  <Edit2 className="w-4 h-4 mr-2" />
-                  Edit
-                </Button>
+                null
               )}
             </div>
 
@@ -541,92 +514,11 @@ export function ProfilePage() {
             </Button>
           </motion.div>
 
-          {/* Notification Preferences */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-white border-2 border-gray-200 rounded-3xl p-6 shadow-sm"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
-                  <Bell className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="text-gray-900 font-medium" style={{ fontSize: "1.125rem" }}>
-                    Notifications
-                  </h3>
-                  <p className="text-gray-600 text-sm">Alert preferences</p>
-                </div>
-              </div>
-              {editingSection !== "notifications" && (
-                <Button
-                  onClick={() => handleEdit("notifications")}
-                  className="bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 rounded-xl px-3 py-2 text-sm"
-                >
-                  <Edit2 className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-
-            {editingSection === "notifications" ? (
-              <div className="space-y-4">
-                {Object.entries(tempNotifications).map(([key, value]) => (
-                  <label key={key} className="flex items-center justify-between cursor-pointer">
-                    <span className="text-gray-700 text-sm">
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                    </span>
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={value}
-                        onChange={(e) => setTempNotifications({ ...tempNotifications, [key]: e.target.checked })}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </div>
-                  </label>
-                ))}
-
-                <div className="flex gap-2 pt-4">
-                  <Button
-                    onClick={() => handleSave("notifications")}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-2 text-sm"
-                  >
-                    <Save className="w-4 h-4 mr-1" />
-                    Save
-                  </Button>
-                  <Button
-                    onClick={handleCancel}
-                    className="flex-1 bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 rounded-xl py-2 text-sm"
-                  >
-                    <X className="w-4 h-4 mr-1" />
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {Object.entries(notifications).map(([key, value]) => (
-                  <div key={key} className="flex items-center justify-between py-2">
-                    <span className="text-gray-700 text-sm">
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                    </span>
-                    <span className={`text-sm font-medium ${value ? "text-green-600" : "text-gray-400"}`}>
-                      {value ? "On" : "Off"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </motion.div>
-
           {/* Doctor Assignment */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="bg-white border-2 border-gray-200 rounded-3xl p-6 shadow-sm"
           >
             <div className="flex items-center gap-3 mb-6">

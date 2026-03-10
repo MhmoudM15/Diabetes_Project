@@ -10,7 +10,6 @@ import {
   AlertTriangle,
   RefreshCcw,
   Bell,
-  Edit,
   Activity,
 } from "lucide-react";
 import { 
@@ -188,10 +187,6 @@ export function PatientDetailPage() {
 
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700">
-                <Edit className="w-4 h-4" />
-                Edit Profile
-              </button>
               <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium">
                 <FileText className="w-4 h-4" />
                 Generate Report
