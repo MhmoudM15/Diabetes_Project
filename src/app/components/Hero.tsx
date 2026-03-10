@@ -3,8 +3,11 @@ import { Button } from "./ui/button";
 
 export function Hero() {
   return (
-    <section className="relative pt-32 pb-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      {/* Large blurry blue circle background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-400 rounded-full opacity-20 blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div 
           className="text-center max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}

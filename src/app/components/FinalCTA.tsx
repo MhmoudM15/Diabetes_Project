@@ -90,15 +90,7 @@ export function FinalCTA() {
             
           </motion.div>
 
-          <motion.p 
-            className="mt-6 text-blue-100 text-sm"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            14-day free trial • No credit card required
-          </motion.p>
+          
         </motion.div>
       </div>
     </section>

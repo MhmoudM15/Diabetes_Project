@@ -10,6 +10,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      <div className="h-8" /> {/* Whitespace between header and hero */}
       <Hero />
       <Features />
       <HowItWorks />
