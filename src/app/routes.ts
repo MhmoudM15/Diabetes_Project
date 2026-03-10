@@ -6,6 +6,7 @@ import { PatientSignup } from "./pages/PatientSignup";
 import { DoctorSignup } from "./pages/DoctorSignup";
 import { PatientDashboard } from "./pages/PatientDashboard";
 import { DoctorDashboard } from "./pages/DoctorDashboard";
+import { PatientDetailPage } from "./pages/PatientDetailPage";
 import { Login } from "./pages/Login";
 
 export const router = createBrowserRouter([
@@ -30,5 +31,9 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard/doctor",
     Component: DoctorDashboard,
+  },
+  {
+    path: "/dashboard/doctor/patient/:patientId",
+    Component: PatientDetailPage,
   },
 ]);

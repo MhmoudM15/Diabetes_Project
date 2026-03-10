@@ -234,8 +234,7 @@ export function CriticalAlertsPage() {
   };
 
   const handleViewPatient = (patientId: string) => {
-    // Patient detail page removed - no navigation
-    console.log(`View patient ${patientId}`);
+    navigate(`/dashboard/doctor/patient/${patientId}`);
   };
 
   const handleSendMessage = (alert: Alert) => {
