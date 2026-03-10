@@ -13,8 +13,7 @@ export function AccountType() {
       description: "Track glucose levels, receive AI predictions, and manage daily health.",
       buttonText: "Continue as Patient",
       onClick: () => {
-        // Navigate to patient dashboard (to be implemented)
-        console.log("Patient selected");
+        navigate("/signup/patient");
       },
     },
     {
@@ -23,8 +22,7 @@ export function AccountType() {
       description: "Monitor patients, review AI insights, and provide medical feedback.",
       buttonText: "Continue as Doctor",
       onClick: () => {
-        // Navigate to doctor dashboard (to be implemented)
-        console.log("Doctor selected");
+        navigate("/signup/doctor");
       },
     },
   ];

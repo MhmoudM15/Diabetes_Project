@@ -57,6 +57,7 @@ export function Hero() {
               variant="outline"
               className="px-8 py-6 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-full transition-all"
               style={{ fontSize: "1.125rem" }}
+              onClick={() => navigate("/account-type")}
             >
               Login
             </Button>
