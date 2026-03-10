@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useNavigate } from "react-router";
 import { Button } from "./ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
@@ -10,6 +11,8 @@ const benefits = [
 ];
 
 export function FinalCTA() {
+  const navigate = useNavigate();
+
   return (
     <section className="py-24 px-6 bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 relative overflow-hidden">
       {/* Decorative background elements */}
@@ -83,6 +86,7 @@ export function FinalCTA() {
               size="lg" 
               className="px-10 py-6 bg-white text-blue-700 hover:bg-gray-100 rounded-full shadow-2xl hover:shadow-3xl transition-all group"
               style={{ fontSize: "1.125rem" }}
+              onClick={() => navigate("/account-type")}
             >
               Get Started Now
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -90,7 +94,15 @@ export function FinalCTA() {
             
           </motion.div>
 
-          
+          <motion.p 
+            className="mt-6 text-blue-100 text-sm"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            Completely free • No credit card required • No hidden fees
+          </motion.p>
         </motion.div>
       </div>
     </section>
