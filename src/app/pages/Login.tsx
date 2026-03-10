@@ -9,9 +9,10 @@ export function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    accountType: "patient", // Default to patient
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -22,9 +23,13 @@ export function Login() {
     e.preventDefault();
     // Handle login
     console.log("Login data:", formData);
-    // For now, redirect to patient dashboard
-    // In a real app, you'd check credentials and redirect based on user type
-    navigate("/dashboard/patient");
+    
+    // Redirect based on account type
+    if (formData.accountType === "doctor") {
+      navigate("/dashboard/doctor");
+    } else {
+      navigate("/dashboard/patient");
+    }
   };
 
   return (
@@ -85,6 +90,23 @@ export function Login() {
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
                   placeholder="Enter your password"
                 />
+              </div>
+
+              {/* Account Type */}
+              <div>
+                <label htmlFor="accountType" className="block text-gray-700 mb-2" style={{ fontSize: "0.95rem" }}>
+                  Account Type
+                </label>
+                <select
+                  id="accountType"
+                  name="accountType"
+                  value={formData.accountType}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
+                >
+                  <option value="patient">Patient</option>
+                  <option value="doctor">Doctor</option>
+                </select>
               </div>
 
               {/* Forgot Password Link */}
