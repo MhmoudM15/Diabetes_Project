@@ -3,10 +3,10 @@ import { Button } from "./ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
 const benefits = [
-  "Start predicting glucose levels in minutes",
-  "No credit card required for trial",
-  "Access to all premium features",
-  "Cancel anytime, hassle-free"
+  "100% Free Forever",
+  "Unlimited Glucose Monitoring",
+  "AI-Powered Insights & Predictions",
+  "Community Support & Resources"
 ];
 
 export function FinalCTA() {
