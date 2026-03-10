@@ -28,6 +28,8 @@ export function PatientSignup() {
     e.preventDefault();
     // Handle form submission
     console.log("Patient signup data:", formData);
+    // Redirect to dashboard
+    navigate("/dashboard/patient");
   };
 
   return (

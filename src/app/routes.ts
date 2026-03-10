@@ -4,6 +4,8 @@ import { Home } from "./pages/Home";
 import { AccountType } from "./pages/AccountType";
 import { PatientSignup } from "./pages/PatientSignup";
 import { DoctorSignup } from "./pages/DoctorSignup";
+import { PatientDashboard } from "./pages/PatientDashboard";
+import { Login } from "./pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -15,5 +17,13 @@ export const router = createBrowserRouter([
       { path: "signup/patient", Component: PatientSignup },
       { path: "signup/doctor", Component: DoctorSignup },
     ],
+  },
+  {
+    path: "/login",
+    Component: Login,
+  },
+  {
+    path: "/dashboard/patient",
+    Component: PatientDashboard,
   },
 ]);
