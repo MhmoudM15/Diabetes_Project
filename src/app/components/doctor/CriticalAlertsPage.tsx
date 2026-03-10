@@ -234,7 +234,8 @@ export function CriticalAlertsPage() {
   };
 
   const handleViewPatient = (patientId: string) => {
-    navigate(`/dashboard/doctor/patient/${patientId}`);
+    // Patient detail page removed - no navigation
+    console.log(`View patient ${patientId}`);
   };
 
   const handleSendMessage = (alert: Alert) => {
@@ -446,17 +447,9 @@ export function CriticalAlertsPage() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b-2 border-gray-200">
               <tr>
-                <th className="text-left py-4 px-4 w-12">
-                  <input
-                    type="checkbox"
-                    checked={selectedAlerts.size === filteredAlerts.length && filteredAlerts.length > 0}
-                    onChange={handleSelectAll}
-                    className="w-4 h-4 rounded border-gray-300"
-                  />
-                </th>
                 <th className="text-left py-4 px-6 text-gray-700 font-medium">Patient</th>
                 <th className="text-left py-4 px-6 text-gray-700 font-medium">Alert Type</th>
-                <th className="text-left py-4 px-6 text-gray-700 font-medium">Value</th>
+                <th className="text-left py-4 px-6 text-gray-700 font-medium w-48">Glucose Value</th>
                 <th className="text-left py-4 px-6 text-gray-700 font-medium">Severity</th>
                 <th className="text-left py-4 px-6 text-gray-700 font-medium">Time</th>
                 <th className="text-left py-4 px-6 text-gray-700 font-medium">Status</th>
@@ -476,20 +469,10 @@ export function CriticalAlertsPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.03 }}
                     className={`
-                      border-b border-gray-100 transition-colors
-                      ${isSelected ? "bg-blue-50" : "hover:bg-gray-50"}
+                      border-b border-gray-100 transition-colors hover:bg-gray-50
                       ${alert.status === "Resolved" ? "opacity-60" : ""}
                     `}
                   >
-                    <td className="py-4 px-4">
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => handleSelectAlert(alert.id)}
-                        className="w-4 h-4 rounded border-gray-300"
-                      />
-                    </td>
-                    
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
@@ -512,9 +495,15 @@ export function CriticalAlertsPage() {
                     </td>
 
                     <td className="py-4 px-6">
-                      <span className={`px-3 py-1.5 rounded-lg text-sm font-medium ${styles.bg} ${styles.text} border-2 ${styles.border}`}>
-                        {alert.value}
-                      </span>
+                      {(alert.alertType === "Hypoglycemia" || alert.alertType === "Hyperglycemia") ? (
+                        <span className={`px-3 py-1.5 rounded-lg text-sm font-medium ${styles.bg} ${styles.text} border-2 ${styles.border}`}>
+                          {alert.value}
+                        </span>
+                      ) : (
+                        <span className="text-sm text-gray-500 italic">
+                          N/A
+                        </span>
+                      )}
                     </td>
 
                     <td className="py-4 px-6">

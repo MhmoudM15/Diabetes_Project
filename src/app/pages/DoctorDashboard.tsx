@@ -28,7 +28,6 @@ export function DoctorDashboard() {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "patients", label: "Patients", icon: Users },
     { id: "high-risk", label: "High Risk Alerts", icon: AlertTriangle },
-    { id: "patient-details", label: "Patient Details", icon: FileText },
     { id: "clinical-notes", label: "Clinical Notes", icon: ClipboardList },
     { id: "ai-assistant", label: "AI Assistant", icon: MessageSquare },
   ];
@@ -157,11 +156,6 @@ export function DoctorDashboard() {
             <CriticalAlertsPage />
           )}
 
-          {/* Patient Details Tab */}
-          {activeTab === "patient-details" && (
-            <PatientAnalytics />
-          )}
-
           {/* Clinical Notes Tab */}
           {activeTab === "clinical-notes" && (
             <ClinicalNotes />
@@ -173,7 +167,7 @@ export function DoctorDashboard() {
           )}
 
           {/* Placeholder for other tabs */}
-          {!["dashboard", "patients", "high-risk", "patient-details", "clinical-notes", "ai-assistant"].includes(activeTab) && (
+          {!["dashboard", "patients", "high-risk", "clinical-notes", "ai-assistant"].includes(activeTab) && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

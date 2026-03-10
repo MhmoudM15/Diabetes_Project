@@ -213,7 +213,8 @@ export function PatientManagement() {
   };
 
   const handlePatientClick = (patientId: string) => {
-    navigate(`/dashboard/doctor/patient/${patientId}`);
+    // Patient detail page removed - no navigation
+    console.log(`Clicked patient ${patientId}`);
   };
 
   const toggleSort = () => {

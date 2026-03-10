@@ -375,6 +375,7 @@ export function PatientAnalytics() {
                 strokeWidth={3}
                 fill="url(#actualGradient)"
                 name="Actual Glucose"
+                connectNulls={false}
               />
               
               {/* Predicted glucose */}
@@ -387,6 +388,7 @@ export function PatientAnalytics() {
                   strokeDasharray="5 5"
                   fill="url(#predictedGradient)"
                   name="AI Prediction"
+                  connectNulls={true}
                 />
               )}
             </AreaChart>
