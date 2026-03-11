@@ -1,7 +1,7 @@
 
-  # Healthcare Landing Page
+  # Diabetes Project
 
-  This is a code bundle for Healthcare Landing Page. The original project is available at https://www.figma.com/design/B1Yj1B3HJiSX8xaKx3GDBy/Healthcare-Landing-Page.
+  This is a code bundle for Diabetes Project. The original project is available at https://www.figma.com/design/B1Yj1B3HJiSX8xaKx3GDBy/Diabetes-Project.
 
   ## Running the code
 
