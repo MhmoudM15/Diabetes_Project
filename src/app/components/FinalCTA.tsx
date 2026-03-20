@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
 const benefits = [
-  "100% Free Forever",
+  "100% Free",
   "Unlimited Glucose Monitoring",
   "AI-Powered Insights & Predictions",
   "Community Support & Resources"
