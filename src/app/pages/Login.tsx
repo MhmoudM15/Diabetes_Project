@@ -1,11 +1,9 @@
 import { motion } from "motion/react";
-import { useNavigate } from "react-router";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { Footer } from "../components/Footer";
 
 export function Login() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,15 +19,7 @@ export function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login
     console.log("Login data:", formData);
-    
-    // Redirect based on account type
-    if (formData.accountType === "doctor") {
-      navigate("/dashboard/doctor");
-    } else {
-      navigate("/dashboard/patient");
-    }
   };
 
   return (
@@ -135,10 +125,9 @@ export function Login() {
                 Don't have an account?{" "}
                 <button
                   type="button"
-                  onClick={() => navigate("/account-type")}
                   className="text-blue-600 hover:text-blue-700 font-medium"
                 >
-                  Sign up
+                  Sign up now
                 </button>
               </p>
             </div>
@@ -151,7 +140,6 @@ export function Login() {
             className="text-center mt-6"
           >
             <button
-              onClick={() => navigate("/")}
               className="text-gray-600 hover:text-blue-600 transition-colors"
             >
               ← Back to Home

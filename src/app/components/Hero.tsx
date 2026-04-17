@@ -1,10 +1,7 @@
 import { motion } from "motion/react";
-import { useNavigate } from "react-router";
 import { Button } from "./ui/button";
 
 export function Hero() {
-  const navigate = useNavigate();
-
   return (
     <section className="relative min-h-[calc(100vh-5rem)] flex items-center px-6 overflow-hidden">
       {/* Large blurry blue circle background */}
@@ -48,7 +45,6 @@ export function Hero() {
               size="lg" 
               className="px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
               style={{ fontSize: "1.125rem" }}
-              onClick={() => navigate("/account-type")}
             >
               Get Started
             </Button>
@@ -57,7 +53,6 @@ export function Hero() {
               variant="outline"
               className="px-8 py-6 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-full transition-all"
               style={{ fontSize: "1.125rem" }}
-              onClick={() => navigate("/login")}
             >
               Login
             </Button>

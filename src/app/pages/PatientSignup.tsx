@@ -1,10 +1,8 @@
 import { motion } from "motion/react";
-import { useNavigate } from "react-router";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 
 export function PatientSignup() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -26,10 +24,7 @@ export function PatientSignup() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log("Patient signup data:", formData);
-    // Redirect to dashboard
-    navigate("/dashboard/patient");
   };
 
   return (
@@ -239,10 +234,9 @@ export function PatientSignup() {
                 Already have an account?{" "}
                 <button
                   type="button"
-                  onClick={() => navigate("/login")}
                   className="text-blue-600 hover:text-blue-700 font-medium"
                 >
-                  Log in
+                  Login here
                 </button>
               </p>
             </div>
@@ -255,10 +249,9 @@ export function PatientSignup() {
             className="text-center mt-6"
           >
             <button
-              onClick={() => navigate("/account-type")}
               className="text-gray-600 hover:text-blue-600 transition-colors"
             >
-              ← Back to Account Type
+              ← Back to Account Selection
             </button>
           </motion.div>
         </div>

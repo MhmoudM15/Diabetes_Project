@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import {
   ArrowLeft,
   User,
@@ -106,21 +106,19 @@ for (let i = 2; i <= 12; i++) {
 
 export function PatientDetailPage() {
   const { patientId } = useParams();
-  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<"historical" | "ai-predict">("historical");
 
   const patient = patientData[patientId || "1"];
 
-  if (!patient) {
+  if (!patientId || !patient) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
+      <div className="p-6 flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h1 className="text-2xl mb-4">Patient not found</h1>
           <button
-            onClick={() => navigate("/dashboard/doctor")}
             className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
           >
-            Back to Dashboard
+            Back to Patient List
           </button>
         </div>
       </div>
@@ -149,11 +147,10 @@ export function PatientDetailPage() {
       <div className="bg-white border-b border-gray-200">
         <div className="p-6">
           <button
-            onClick={() => navigate("/dashboard/doctor")}
             className="flex items-center gap-2 text-gray-600 hover:text-blue-600 mb-4 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            Back to Patients
+            Back to Patient List
           </button>
 
           <div className="flex items-start justify-between">

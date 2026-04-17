@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { 
-  AlertTriangle, 
-  TrendingDown, 
-  TrendingUp, 
+import {
   Activity,
-  Clock,
-  Filter,
-  Eye,
-  MessageSquare,
-  CheckCircle,
+  TrendingUp,
+  TrendingDown,
+  Bell,
   Search,
+  Filter,
+  Clock,
+  AlertTriangle,
+  CheckCircle,
   AlertCircle,
-  X
+  X,
+  MessageSquare
 } from "lucide-react";
-import { useNavigate } from "react-router";
 
 interface Alert {
   id: string;
@@ -164,7 +163,6 @@ const mockAlerts: Alert[] = [
 ];
 
 export function CriticalAlertsPage() {
-  const navigate = useNavigate();
   const [alerts, setAlerts] = useState<Alert[]>(mockAlerts);
   const [searchTerm, setSearchTerm] = useState("");
   const [severityFilter, setSeverityFilter] = useState<string>("all");
@@ -234,7 +232,7 @@ export function CriticalAlertsPage() {
   };
 
   const handleViewPatient = (patientId: string) => {
-    navigate(`/dashboard/doctor/patient/${patientId}`);
+    // Add navigation logic here if needed
   };
 
   const handleSendMessage = (alert: Alert) => {
@@ -545,7 +543,7 @@ export function CriticalAlertsPage() {
                           className="p-2 hover:bg-blue-50 rounded-lg transition-colors group"
                           title="View Patient"
                         >
-                          <Eye className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
+                          <Bell className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
                         </button>
                         <button
                           onClick={() => handleSendMessage(alert)}

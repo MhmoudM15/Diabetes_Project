@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Search, Filter, ArrowUpDown, ChevronRight, Activity, AlertCircle } from "lucide-react";
-import { useNavigate } from "react-router";
 
 interface Patient {
   id: string;
@@ -164,7 +163,6 @@ const mockPatients: Patient[] = [
 ];
 
 export function PatientManagement() {
-  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [riskFilter, setRiskFilter] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -213,7 +211,7 @@ export function PatientManagement() {
   };
 
   const handlePatientClick = (patientId: string) => {
-    navigate(`/dashboard/doctor/patient/${patientId}`);
+    // Add navigation logic here if needed
   };
 
   const toggleSort = () => {
@@ -379,7 +377,11 @@ export function PatientManagement() {
                   </td>
                   <td className="py-4 px-6 text-gray-700">{patient.lastVisit}</td>
                   <td className="py-4 px-6">
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                    <button 
+                      className="p-2 hover:bg-gray-50 rounded-lg transition-colors group"
+                    >
+                      <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                    </button>
                   </td>
                 </motion.tr>
               ))}
