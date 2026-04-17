@@ -2,19 +2,15 @@ import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { Footer } from "../components/Footer";
-import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
 
 export function Login() {
-  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     accountType: "patient", // Default to patient
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -23,25 +19,15 @@ export function Login() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    console.log("Login data:", formData);
     
-    try {
-      await login(formData.email, formData.password);
-      toast.success("Login successful!");
-      
-      // Redirect based on account type
-      if (formData.accountType === "doctor") {
-        navigate("/dashboard/doctor");
-      } else {
-        navigate("/dashboard/patient");
-      }
-    } catch (error) {
-      toast.error("Invalid credentials. Please try again.");
-      console.error("Login error:", error);
-    } finally {
-      setIsLoading(false);
+    // Navigate to appropriate dashboard based on account type
+    if (formData.accountType === "doctor") {
+      navigate("/dashboard/doctor");
+    } else {
+      navigate("/dashboard/patient");
     }
   };
 
@@ -139,9 +125,8 @@ export function Login() {
               size="lg"
               className="w-full mt-8 px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
               style={{ fontSize: "1.125rem" }}
-              disabled={isLoading}
             >
-              {isLoading ? "Logging in..." : "Log In"}
+              Log In
             </Button>
 
             <div className="mt-6 text-center">

@@ -1,12 +1,9 @@
 import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
 
 export function DoctorSignup() {
-  const { signup } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -17,7 +14,6 @@ export function DoctorSignup() {
     specialization: "",
     hospital: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -26,34 +22,11 @@ export function DoctorSignup() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    setIsLoading(true);
-    
-    try {
-      await signup({
-        email: formData.email,
-        fullName: formData.fullName,
-        role: 'doctor',
-        licenseNumber: formData.licenseNumber,
-        specialization: formData.specialization,
-        hospital: formData.hospital,
-      });
-      
-      toast.success("Account created successfully!");
-      navigate("/dashboard/doctor");
-    } catch (error) {
-      toast.error("Failed to create account. Please try again.");
-      console.error("Signup error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    console.log("Doctor signup data:", formData);
+    // Navigate to doctor dashboard after signup
+    navigate("/dashboard/doctor");
   };
 
   return (
@@ -215,9 +188,8 @@ export function DoctorSignup() {
               size="lg"
               className="w-full mt-8 px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
               style={{ fontSize: "1.125rem" }}
-              disabled={isLoading}
             >
-              {isLoading ? "Creating Account..." : "Create Doctor Account"}
+              Create Doctor Account
             </Button>
 
             <div className="mt-6 text-center">

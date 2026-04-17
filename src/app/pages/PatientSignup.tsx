@@ -1,12 +1,9 @@
 import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
 
 export function PatientSignup() {
-  const { signup } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -19,7 +16,6 @@ export function PatientSignup() {
     weight: "",
     doctor: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -28,35 +24,11 @@ export function PatientSignup() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    setIsLoading(true);
-    
-    try {
-      await signup({
-        email: formData.email,
-        fullName: formData.fullName,
-        role: 'patient',
-        age: formData.age ? parseInt(formData.age) : undefined,
-        diabetesType: formData.diabetesType,
-        height: formData.height,
-        weight: formData.weight,
-      });
-      
-      toast.success("Account created successfully!");
-      navigate("/dashboard/patient");
-    } catch (error) {
-      toast.error("Failed to create account. Please try again.");
-      console.error("Signup error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    console.log("Patient signup data:", formData);
+    // Navigate to patient dashboard after signup
+    navigate("/dashboard/patient");
   };
 
   return (
@@ -257,9 +229,8 @@ export function PatientSignup() {
               size="lg"
               className="w-full mt-8 px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
               style={{ fontSize: "1.125rem" }}
-              disabled={isLoading}
             >
-              {isLoading ? "Creating Account..." : "Create Patient Account"}
+              Create Patient Account
             </Button>
 
             <div className="mt-6 text-center">
