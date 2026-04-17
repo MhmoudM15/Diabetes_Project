@@ -2,13 +2,19 @@ import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { Footer } from "../components/Footer";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     accountType: "patient", // Default to patient
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -17,9 +23,26 @@ export function Login() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login data:", formData);
+    setIsLoading(true);
+    
+    try {
+      await login(formData.email, formData.password);
+      toast.success("Login successful!");
+      
+      // Redirect based on account type
+      if (formData.accountType === "doctor") {
+        navigate("/dashboard/doctor");
+      } else {
+        navigate("/dashboard/patient");
+      }
+    } catch (error) {
+      toast.error("Invalid credentials. Please try again.");
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -116,8 +139,9 @@ export function Login() {
               size="lg"
               className="w-full mt-8 px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
               style={{ fontSize: "1.125rem" }}
+              disabled={isLoading}
             >
-              Log In
+              {isLoading ? "Logging in..." : "Log In"}
             </Button>
 
             <div className="mt-6 text-center">
@@ -126,6 +150,7 @@ export function Login() {
                 <button
                   type="button"
                   className="text-blue-600 hover:text-blue-700 font-medium"
+                  onClick={() => navigate("/account-type")}
                 >
                   Sign up now
                 </button>
@@ -141,6 +166,7 @@ export function Login() {
           >
             <button
               className="text-gray-600 hover:text-blue-600 transition-colors"
+              onClick={() => navigate("/")}
             >
               ← Back to Home
             </button>

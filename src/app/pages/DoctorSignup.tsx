@@ -1,16 +1,23 @@
 import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export function DoctorSignup() {
+  const { signup } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
-    medicalLicenseId: "",
-    hospitalClinic: "",
+    confirmPassword: "",
+    licenseNumber: "",
     specialization: "",
+    hospital: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -19,10 +26,34 @@ export function DoctorSignup() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Doctor signup data:", formData);
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      await signup({
+        email: formData.email,
+        fullName: formData.fullName,
+        role: 'doctor',
+        licenseNumber: formData.licenseNumber,
+        specialization: formData.specialization,
+        hospital: formData.hospital,
+      });
+      
+      toast.success("Account created successfully!");
+      navigate("/dashboard/doctor");
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.");
+      console.error("Signup error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -103,16 +134,33 @@ export function DoctorSignup() {
                 />
               </div>
 
+              {/* Confirm Password */}
+              <div>
+                <label htmlFor="confirmPassword" className="block text-gray-700 mb-2" style={{ fontSize: "0.95rem" }}>
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
+                  placeholder="Confirm your password"
+                />
+              </div>
+
               {/* Medical License ID */}
               <div>
-                <label htmlFor="medicalLicenseId" className="block text-gray-700 mb-2" style={{ fontSize: "0.95rem" }}>
+                <label htmlFor="licenseNumber" className="block text-gray-700 mb-2" style={{ fontSize: "0.95rem" }}>
                   Medical License ID
                 </label>
                 <input
                   type="text"
-                  id="medicalLicenseId"
-                  name="medicalLicenseId"
-                  value={formData.medicalLicenseId}
+                  id="licenseNumber"
+                  name="licenseNumber"
+                  value={formData.licenseNumber}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
@@ -122,14 +170,14 @@ export function DoctorSignup() {
 
               {/* Hospital / Clinic */}
               <div>
-                <label htmlFor="hospitalClinic" className="block text-gray-700 mb-2" style={{ fontSize: "0.95rem" }}>
+                <label htmlFor="hospital" className="block text-gray-700 mb-2" style={{ fontSize: "0.95rem" }}>
                   Hospital / Clinic
                 </label>
                 <input
                   type="text"
-                  id="hospitalClinic"
-                  name="hospitalClinic"
-                  value={formData.hospitalClinic}
+                  id="hospital"
+                  name="hospital"
+                  value={formData.hospital}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors"
@@ -167,8 +215,9 @@ export function DoctorSignup() {
               size="lg"
               className="w-full mt-8 px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
               style={{ fontSize: "1.125rem" }}
+              disabled={isLoading}
             >
-              Create Doctor Account
+              {isLoading ? "Creating Account..." : "Create Doctor Account"}
             </Button>
 
             <div className="mt-6 text-center">
@@ -177,6 +226,7 @@ export function DoctorSignup() {
                 <button
                   type="button"
                   className="text-blue-600 hover:text-blue-700 font-medium"
+                  onClick={() => navigate("/login")}
                 >
                   Login here
                 </button>
@@ -192,6 +242,7 @@ export function DoctorSignup() {
           >
             <button
               className="text-gray-600 hover:text-blue-600 transition-colors"
+              onClick={() => navigate("/account-type")}
             >
               ← Back to Account Selection
             </button>

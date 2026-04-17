@@ -1,20 +1,25 @@
 import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
 import { User, Stethoscope } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export function AccountType() {
+  const navigate = useNavigate();
+
   const accountTypes = [
     {
       icon: User,
       title: "Patient",
       description: "Monitor your glucose levels with AI-powered insights and predictions",
       buttonText: "Continue as Patient",
+      onClick: () => navigate("/signup/patient"),
     },
     {
       icon: Stethoscope,
       title: "Healthcare Provider",
       description: "Manage patients, view critical alerts, and access advanced analytics",
       buttonText: "Continue as Doctor",
+      onClick: () => navigate("/signup/doctor"),
     },
   ];
 
@@ -61,6 +66,7 @@ export function AccountType() {
                     size="lg"
                     className="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all group-hover:scale-105"
                     style={{ fontSize: "1.125rem" }}
+                    onClick={type.onClick}
                   >
                     {type.buttonText}
                   </Button>
@@ -77,6 +83,7 @@ export function AccountType() {
           >
             <button
               className="text-gray-600 hover:text-blue-600 transition-colors"
+              onClick={() => navigate("/")}
             >
               ← Back to Home
             </button>

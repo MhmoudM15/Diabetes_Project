@@ -1,15 +1,17 @@
 import { motion } from "motion/react";
 import { Button } from "./ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const benefits = [
   "100% Free",
-  "Unlimited Glucose Monitoring",
-  "AI-Powered Insights & Predictions",
-  "Community Support & Resources"
+  "AI-Powered Predictions",
+  "Unlimited Glucose Tracking",
+  "24/7 Medical Chatbot",
 ];
 
 export function FinalCTA() {
+  const navigate = useNavigate();
   return (
     <section className="py-24 px-6 bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 relative overflow-hidden">
       {/* Decorative background elements */}
@@ -83,6 +85,7 @@ export function FinalCTA() {
               size="lg" 
               className="px-10 py-6 bg-white text-blue-700 hover:bg-gray-100 rounded-full shadow-2xl hover:shadow-3xl transition-all group"
               style={{ fontSize: "1.125rem" }}
+              onClick={() => navigate("/account-type")}
             >
               Get Started Now
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
